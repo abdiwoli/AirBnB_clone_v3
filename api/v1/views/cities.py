@@ -15,10 +15,10 @@ def ret_cities(sid):
         s = s.to_dict()
         all = []
         for k, v in storage.all(City).items():
-            if v.state_id == s.id:
+            if v.state_id == sid:
                 all.append(v.to_dict())
         return jsonify(all)
-    return abort(404)
+    abort(404)
 
 
 @app_views.route('/states/<sid>/cities', methods=['POST'],
@@ -31,11 +31,12 @@ def post_cities(sid):
     try:
         dict_json = request.get_json()
     except Exception as e:
-        abort(404, description=f"Not a JSON")
+        abort(404, "Not a JSON")
 
     if 'name' not in dict_json:
         abort(404, description=f"Missing name")
     c = City(**dict_json)
+    c.state_id = sid
     storage.new(c)
     storage.save()
     return jsonify(c.to_dict()), 201
@@ -48,7 +49,7 @@ def get_cities(sid):
     if s:
         s = s.to_dict()
         return jsonify(s)
-    return abort(404)
+    abort(404)
 
 
 @app_views.route('/cities/<sid>', methods=['DELETE'], strict_slashes=False)
@@ -70,10 +71,10 @@ def update_cities(sid):
     try:
         dict_json = request.get_json()
     except Exception as e:
-        abort(404, description=f"Not a JSON")
+        abort(404, "Not a JSON")
 
     if 'name' not in dict_json:
-        abort(404, description=f"Missing name")
+        abort(404, "Missing name")
     ignore = ['updated_at', 'created_at', 'id', 'state_id']
     for key, value in dict_json.items():
         if key not in ignore:
