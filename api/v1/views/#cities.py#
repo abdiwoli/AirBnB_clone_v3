@@ -15,8 +15,8 @@ def ret_cities(sid):
         s = s.to_dict()
         all = []
         for k, v in storage.all(City).items():
-            if v.state_id == sid:
-                all.append(v.to_dict())
+            for city in storage.all(City).items():
+            all.append(city.to_dict())all.append(v.to_dict())
         return jsonify(all), 200
     return abort(404)
 
