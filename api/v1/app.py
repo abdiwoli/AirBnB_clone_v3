@@ -1,12 +1,14 @@
-# api/v1/app.py
+#!/usr/bin/python3
+""" api/v1/app.py """
 from flask import Flask, jsonify
 from models import storage
 from api.v1.views import app_views
 import os
 
-app = Flask(__name__)
 
+app = Flask(__name__)
 app.register_blueprint(app_views)
+
 
 @app.teardown_appcontext
 def teardown_db(exception):
@@ -17,6 +19,7 @@ def teardown_db(exception):
 def not_found(error):
     """Handles 404 errors and returns a JSON-formatted response"""
     return jsonify({"error": "Not found"}), 404
+
 
 if __name__ == "__main__":
     host = os.getenv('HBNB_API_HOST', '0.0.0.0')
