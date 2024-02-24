@@ -15,9 +15,9 @@ def ret_cities(sid):
         s = s.to_dict()
         all = []
         for k, v in storage.all(City).items():
-            if v.state_id == sid:
+            if v.state_id == s.id:
                 all.append(v.to_dict())
-        return jsonify(all), 200
+        return jsonify(all)
     return abort(404)
 
 
@@ -38,7 +38,7 @@ def post_cities(sid):
     c = City(**dict_json)
     storage.new(c)
     storage.save()
-    return jsonify(c.to_dict())
+    return jsonify(c.to_dict()), 201
 
 
 @app_views.route('/cities/<sid>', methods=['GET'], strict_slashes=False)
