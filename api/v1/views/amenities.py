@@ -3,7 +3,9 @@
 from api.v1.views import app_views
 from flask import jsonify, abort, request
 from models.city import City
-from models.state import Statefrom models import storage, Amenity
+from models.state import State
+from models import storage
+from models.amenity import Amenity
 
 @app_views.route('/amenities', methods=['GET'], strict_slashes=False)
 def get_amenities():
