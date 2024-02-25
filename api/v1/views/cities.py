@@ -1,5 +1,6 @@
 #!/usr/bin/python3
-""" api/v1/views/cities.py """
+""" api/v1/views/cities.py module documentation
+"""
 from models import storage
 from flask import jsonify, abort, request
 from api.v1.views import app_views
