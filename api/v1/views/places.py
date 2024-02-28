@@ -60,7 +60,7 @@ def delete_place(place_id):
         storage.delete(s)
         storage.save()
         return jsonify({}), 200
-    return abort(404)
+    abort(404)
 
 
 @app_views.route('/places/<place_id>', methods=['PUT'], strict_slashes=False)
@@ -68,12 +68,13 @@ def update_places(place_id):
     """ update city """
     place = storage.get(Place, place_id)
     if not place:
-        return abort(404)
+        abort(404)
     try:
         dict_json = request.get_json()
     except Exception as e:
         abort(400, "Not a JSON")
-
+    if not dict_json:
+        abort(400, "Not a JSON")
     if 'name' not in dict_json:
         abort(400, "Missing name")
     ignore = ['updated_at', 'created_at', 'id', 'state_id']
