@@ -34,7 +34,7 @@ def post_places(city_id):
         abort(404, "Not a JSON")
 
     if 'name' not in dict_json:
-        abort(404, description=f"Missing name")
+        abort(404, "Missing name")
     c = Place(**dict_json)
     c.city_id = city.id
     storage.new(c)
