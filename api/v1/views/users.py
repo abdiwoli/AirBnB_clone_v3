@@ -13,6 +13,8 @@ from models.amenity import Amenity
 def get_users():
     """Retrieves the list of all User objects"""
     users = [user.to_dict() for user in storage.all(User).values()]
+    if len(users) == 0:
+        abort(404)
     return jsonify(users)
 
 
