@@ -35,7 +35,7 @@ def post_cities(sid):
         abort(404, "Not a JSON")
 
     if 'name' not in dict_json:
-        abort(404, description=f"Missing name")
+        abort(404, "Missing name")
     c = City(**dict_json)
     c.state_id = sid
     storage.new(c)
