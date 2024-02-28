@@ -17,7 +17,10 @@ def ret_places(city_id):
         for v in storage.all(Place).values():
             if v.city_id == c.id:
                 all.append(v.to_dict())
-        return jsonify(all)
+        if all:
+            return jsonify(all)
+        else:
+            abort(404)
     abort(404)
 
 
