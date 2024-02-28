@@ -31,10 +31,10 @@ def post_places(city_id):
     try:
         dict_json = request.get_json()
     except Exception as e:
-        abort(404, "Not a JSON")
+        abort(400, "Not a JSON")
 
     if 'name' not in dict_json:
-        abort(404, "Missing name")
+        abort(400, "Missing name")
     c = Place(**dict_json)
     c.city_id = city.id
     storage.new(c)
@@ -58,6 +58,7 @@ def delete_place(place_id):
     s = storage.get(Place, place_id)
     if s:
         storage.delete(s)
+        storage.save()
         return jsonify({}), 200
     return abort(404)
 
@@ -71,10 +72,10 @@ def update_places(place_id):
     try:
         dict_json = request.get_json()
     except Exception as e:
-        abort(404, "Not a JSON")
+        abort(400, "Not a JSON")
 
     if 'name' not in dict_json:
-        abort(404, "Missing name")
+        abort(400, "Missing name")
     ignore = ['updated_at', 'created_at', 'id', 'state_id']
     for key, value in dict_json.items():
         if key not in ignore:
@@ -91,9 +92,9 @@ def search():
     try:
         data = request.get_json()
     except Exception as e:
-        abort(404, "Not a JSON")
+        abort(400, "Not a JSON")
     if not data:
-        abort(404, "Not a JSON")
+        abort(400, "Not a JSON")
     if data and data['cities']:
         city_ids = data['cities']
     else:
