@@ -17,10 +17,7 @@ def ret_places(city_id):
         for v in storage.all(Place).values():
             if v.city_id == c.id:
                 all.append(v.to_dict())
-        if all:
-            return jsonify(all)
-        else:
-            abort(404)
+        return jsonify(all)
     abort(404)
 
 
@@ -35,7 +32,8 @@ def post_places(city_id):
         dict_json = request.get_json()
     except Exception as e:
         abort(400, "Not a JSON")
-
+    if not dict_json:
+        abort(404)
     if 'name' not in dict_json:
         abort(400, "Missing name")
     c = Place(**dict_json)
