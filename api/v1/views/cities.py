@@ -18,7 +18,8 @@ def ret_cities(sid):
         for k, v in storage.all(City).items():
             if v.state_id == sid:
                 all.append(v.to_dict())
-        return jsonify(all)
+        if all:
+            return jsonify(all)
     abort(404)
 
 
@@ -33,7 +34,8 @@ def post_cities(sid):
         dict_json = request.get_json()
     except Exception as e:
         abort(400, "Not a JSON")
-
+    if not dict_json:
+        abort(400, "Not a JSON")
     if 'name' not in dict_json:
         abort(400, "Missing name")
     c = City(**dict_json)
