@@ -32,7 +32,7 @@ def post_cities(sid):
     try:
         dict_json = request.get_json()
     except Exception as e:
-        abort(404, "Not a JSON")
+        abort(400, "Not a JSON")
 
     if 'name' not in dict_json:
         abort(404, "Missing name")
