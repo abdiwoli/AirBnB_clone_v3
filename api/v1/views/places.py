@@ -5,6 +5,7 @@ from flask import jsonify, abort, request
 from api.v1.views import app_views
 from models.city import City
 from models.place import Place
+from models.user import User
 
 
 @app_views.route('/cities/<city_id>/places', methods=['GET'],
@@ -34,6 +35,8 @@ def post_places(city_id):
         abort(400, "Not a JSON")
     if not dict_json:
         abort(400)
+    if "user_id" in dict_json and not storage.get(User, dict_json['user_id']):
+        abort(404)
     if 'name' not in dict_json:
         abort(400, "Missing name")
     c = Place(**dict_json)
@@ -97,6 +100,8 @@ def search():
         abort(400, "Not a JSON")
     if not data:
         abort(400, "Not a JSON")
+    if "user_id" in data and  not storage.get(User, data['user_id']):
+        abort(404)
     if data and data['cities']:
         city_ids = data['cities']
     else:
