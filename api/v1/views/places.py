@@ -100,7 +100,7 @@ def search():
         abort(400, "Not a JSON")
     if not data:
         abort(400, "Not a JSON")
-    if "user_id" in data and  not storage.get(User, data['user_id']):
+    if "user_id" in data and not storage.get(User, data['user_id']):
         abort(404)
     if data and data['cities']:
         city_ids = data['cities']
