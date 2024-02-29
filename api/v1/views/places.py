@@ -35,6 +35,8 @@ def post_places(city_id):
         abort(400, "Not a JSON")
     if not dict_json:
         abort(400)
+    if "user_id" not in dict_json:
+        abort(400, "Missing user_id")
     if "user_id" in dict_json and not storage.get(User, dict_json['user_id']):
         abort(404)
     if 'name' not in dict_json:
