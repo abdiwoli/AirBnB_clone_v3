@@ -3,7 +3,7 @@
 """
 import json
 import requests
-import sys
+
 if __name__ == "__main__":
     """ get the state with cities
     """
@@ -27,12 +27,8 @@ if __name__ == "__main__":
     r_j = r.json()
     city_id = None
     for city_j in r_j:
-        print(city_j)
-        sys.exit()
         rc = requests.get("http://0.0.0.0:5000/api/v1/cities/{}/places".format(city_j.get('id')))
         rc_j = rc.json()
-        print(rc_j)
-        sys.exit(1)
         if len(rc_j) != 0:
             city_id = city_j.get('id')
             break
